@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <link rel="stylesheet" href="static/css/settings.css">
+</head>
+<body>
+    <div id="sidebar">
+        <div id="logo">
+            <a href="/home">Finderr</a>
+        </div>
+        <ul>
+            <li><a href="#download-management">Download client</a></li>
+            <li><a href="#ree-feed">RSS Feed</a></li>
+            <li><a href="#file-magement">File Management</a></li>
+            <li><a href="#user-mangement">Users</a></li>
+        </ul>
+    </div>
+    <div id="main-content">
+        <header>
+            <button id="menu-btn">Menu</button>
+            <h1>Settings</h1>
+        </header>
+
+        <!-- Download Management -->
+         <section id="download-management">
+            <form id="torrent-config-form">
+                <label for="client">Select Torrent Client:</label>
+                <select name="client" id="client">
+                    <option value="qbittorrent">qBittorrent</option>
+                    <option value="deluge">Deluge</option>
+                    <option value="utorrent">uTorrent</option>
+                </select>
+                <button type="button" id="test-connection">Test Connection</button>
+                <div id="connection-status"></div>
+            </form>
+         </section>
+
+        <!-- RSS Feed -->
+         <section id="rss-feed">
+            <h2>RSS Feed</h2>
+            <form id="rss-config-form">
+                <label for="rss-url">RSS URL:</label>
+                <input type="url" id="rss-url" placeholder="Add new RSS feed">
+                <button type="button" id="add-rss">Add</button>
+            </form>
+            <ul id="rss-list">
+                <!--populated by backend-->
+            </ul>
+         </section> 
+
+        <!-- File management -->
+         <section id="file-management">
+            <h2>File Management</h2>
+            <form id="file-config-form">
+                <label for="directory">Set Directory:</label>
+                <input type="text" id="directory" name="directory" placeholder="Directory Path">
+                <label for="naming-style">Change Naming Style:</label>
+                <input type="text" id="naming-style" name="naming-style" placeholder="e.g., {title}_{year}">
+                <button type="button">Save</button>
+            </form>
+         </section>
+
+        <!-- User Management -->
+         <section id="user-management">
+            <h2>User Management</h2>
+            <form id="user-config-form">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" placeholder="Add nuw user">
+                <label for="user-permissions">Permissions:</label>
+                <select name="permissions" id="user-permissions">
+                    <option value="1">Admin</option>
+                    <option value="2">Regular User</option>
+                </select>
+                <button type="button" id="add-user">Add User</button>
+            </form>
+            <ul id="user-list"></ul>
+         </section> 
+    </div>
+    <script src="static/js/settings.js"></script>
+</body>
+</html>
