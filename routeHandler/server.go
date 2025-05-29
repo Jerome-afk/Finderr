@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"database/sql"
 	"log"
 	"os"
 
@@ -18,28 +19,47 @@ func InitServer() *gin.Engine {
 	// Initialize the logger
 	logger.InitLogger()
 
-	// TODO: Add function to create a Admin and Password
+	// Create directories
+	dirs := []string{"./movies", "./tv_shows", "./anime", "./anime_m", "./novels", "./music"}
+	for _, dir := range dirs {
+		err := os.MkdirAll(dir, os.ModePerm)
+		if err != nil {
+			log.Fatalf("Failed to create directory %s: %v", dir, err)
+		}
+	}
 
 	// Initialize database
 	defaultRoute := "./forum.db"
 
-	route, isDefault, err := database.AskForRoute(defaultRoute)
+	// Ask for database configuration
+	dbConfig, err := database.AskForDatabaseConfig(defaultRoute)
 	if err != nil {
-		log.Fatalf("Error: %v\n", err)
+		log.Fatalf("Error configuring database: %v\n", err)
 		os.Exit(1)
 	}
 
-	if isDefault {
-		// Use default route
-	} else {
-		defaultRoute = route
+	// Save the configuration for future use
+	err = database.SaveConfig(dbConfig)
+	if err != nil {
+		log.Printf("Warning: Failed to save database configuration: %v\n", err)
 	}
-	db, err := database.InitDB(defaultRoute)
+
+	// Initialize database with the configuration
+	var db *sql.DB
+	if dbConfig.IsLocal && dbConfig.DBType == "sqlite" {
+		// For SQLite, use the file path
+		db, err = database.InitDB(dbConfig.FilePath)
+	} else {
+		// For cloud databases, use the configuration
+		db, err = database.InitDBWithConfig(dbConfig)
+	}
+
 	if err != nil {
 		log.Fatalf("Failed to initialize database: %v", err)
 	}
 	defer db.Close()
 
+	// Run migrations
 	err = database.RunMigrations(db)
 	if err != nil {
 		logger.LogEvent("Server", "Failed to run migration")
@@ -51,6 +71,7 @@ func InitServer() *gin.Engine {
 	hub := websocket.NewHub()
 	go hub.Run()
 
+	// TODO: Add function to create a Admin and Password
 
 	// Initialize routes
 	InitializeRoutes(router, hub)
