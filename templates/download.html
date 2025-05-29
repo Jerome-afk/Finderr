@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitty Torrent Downloader</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .download-form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .progress-container {
+            margin-top: 20px;
+            display: none;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background-color: #4CAF50;
+            transition: width 0.3s ease;
+        }
+        .status {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        select, input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="download-form">
+        <h2>Bitty Torrent Downloader</h2>
+        <form id="downloadForm">
+            <div>
+                <label for="torrentFile">Torrent File Path:</label>
+                <input type="text" id="torrentFile" name="torrent-file" required>
+            </div>
+            <div>
+                <label for="mediaType">Media Type:</label>
+                <select id="mediaType" name="media-flag">
+                    <option value="-mo">Movies</option>
+                    <option value="-an">Anime</option>
+                    <option value="-tv">TV Shows</option>
+                    <option value="-mu">Music</option>
+                    <option value="">Others</option>
+                </select>
+            </div>
+            <button type="submit">Start Download</button>
+        </form>
+
+        <div class="progress-container" id="progressContainer">
+            <h3>Download Progress</h3>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="status" id="status">Initializing...</div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('downloadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const params = new URLSearchParams();
+            formData.forEach((value, key) => params.append(key, value));
+
+            // Show progress container
+            document.getElementById('progressContainer').style.display = 'block';
+
+            // Connect to WebSocket
+            const ws = new WebSocket(`ws://${window.location.host}/ws`);
+            
+            ws.onopen = function() {
+                // Start the download once WebSocket is connected
+                fetch(`/download?${params.toString()}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            document.getElementById('status').textContent = 'Download completed successfully';
+                            document.getElementById('progressFill').style.width = '100%';
+                        }
+                    })
+                    .catch(error => {
+                        document.getElementById('status').textContent = 'Error: ' + error.message;
+                    });
+            };
+
+            ws.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+                document.getElementById('progressFill').style.width = data.progress + '%';
+                document.getElementById('status').textContent = data.status;
+            };
+
+            ws.onerror = function(error) {
+                document.getElementById('status').textContent = 'WebSocket Error: ' + error.message;
+            };
+
+            ws.onclose = function() {
+                console.log('WebSocket connection closed');
+            };
+        });
+    </script>
+</body>
+</html>
