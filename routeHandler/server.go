@@ -20,7 +20,7 @@ func InitServer() *gin.Engine {
 	logger.InitLogger()
 
 	// Create directories
-	dirs := []string{"./movies", "./tv_shows", "./anime", "./anime_m", "./novels", "./music"}
+	dirs := []string{"./media/movies", "./media/tv_shows", "./media/anime", "./media/anime_m", "./media/novels", "./media/music"}
 	for _, dir := range dirs {
 		err := os.MkdirAll(dir, os.ModePerm)
 		if err != nil {

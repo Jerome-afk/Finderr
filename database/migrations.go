@@ -25,7 +25,7 @@ func RunMigrations(db *sql.DB) error {
 			movie_id INTEGER PRIMARY KEY AUTOINCREMENT,
 			title VARCHAR(255) NOT NULL,
 			state TEXT NOT NULL,
-			url TEXT NOT NULL,
+			url TEXT NOT NULL
 		)
 	`)
 	if err != nil {
@@ -37,7 +37,7 @@ func RunMigrations(db *sql.DB) error {
 			season_id INTEGER PRIMARY KEY AUTOINCREMENT,
 			title VARCHAR(255) NOT NULL,
 			season TEXT NOT NULL,
-			state TEXT NOT NULL,
+			state TEXT NOT NULL
 		)
 	`)
 	if err != nil {
@@ -63,7 +63,7 @@ func RunMigrations(db *sql.DB) error {
 			anime_id INTEGER PRIMARY KEY AUTOINCREMENT,
 			title VARCHAR(255) NOT NULL,
 			season TEXT NOT NULL,
-			state TEXT NOT NULL,
+			state TEXT NOT NULL
 		)
 	`)
 	if err != nil {
@@ -89,13 +89,13 @@ func RunMigrations(db *sql.DB) error {
 			animeM_id INTEGER PRIMARY KEY AUTOINCREMENT,
 			title VARCHAR(255) NOT NULL,
 			state TEXT NOT NULL,
-			url TEXT NOT NULL,
+			url TEXT NOT NULL
 		)
 	`)
 	if err != nil {
 		return err
 	}
-	
+
 	log.Println("Database migrations completed")
 	return nil
 }

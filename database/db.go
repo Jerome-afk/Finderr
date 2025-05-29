@@ -10,7 +10,7 @@ import (
 
 	_ "github.com/go-sql-driver/mysql" // MySQL driver
 	_ "github.com/lib/pq"              // PostgreSQL driver
-	_ "github.com/mattn/go-sqlite3"
+	_ "modernc.org/sqlite"
 )
 
 // DBConfig holds database connection configuration
@@ -184,7 +184,7 @@ func InitDB(filepath string) (*sql.DB, error) {
 	config, err := GetSavedConfig()
 	if err != nil || config.DBType == "" {
 		// If no saved config or error, use the filepath as SQLite database
-		db, err := sql.Open("sqlite3", filepath)
+		db, err := sql.Open("sqlite", filepath)
 		if err != nil {
 			return nil, err
 		}
@@ -209,7 +209,7 @@ func InitDBWithConfig(config DBConfig) (*sql.DB, error) {
 
 	switch config.DBType {
 	case "sqlite":
-		db, err = sql.Open("sqlite3", config.FilePath)
+		db, err = sql.Open("sqlite", config.FilePath)
 		if err != nil {
 			return nil, err
 		}
