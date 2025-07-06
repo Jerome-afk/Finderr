@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Finderr</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .sidebar {
+            transition: all 0.3s ease;
+            width: 80px;
+        }
+
+        .sidebar:hover {
+            width: 250px;
+        }
+
+        .sidebar-item-text {
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .sidebar:hover .sidebar-item-text {
+            opacity: 1;
+        }
+
+        .nav-search {
+            transition: all 0.3s ease;
+            width: 180px;
+        }
+
+        .nav-search:focus {
+            width: 300px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans flex h-screen overflow-hidden">
+    <!-- Sidebar -->
+    <div class="sidebar bg-blue-900 text-white h-full fixed flex flex-col">
+        <div class="p-4 text-center border-b border-blue-800">
+            <i class="fas fa-compact-disc text-2xl"></i>
+        </div>
+        <nav class="flex-1 overflow-y-auto pt-4">
+            <a href="#" class="sidebar-item flex items-center p-4 hover:bg-blue-800">
+                <i class="fas fa-home text-xl w-8"></i>
+                <span class="sidebar-item-text ml-4 whitespace-nowrap">Home</span>
+            </a>
+            <a href="#" class="sidebar-item flex items-center p-4 hover:bg-blue-800">
+                <i class="fas fa-film text-xl w-8"></i>
+                <span class="sidebar-item-text ml-4 whitespace-nowrap">Movies</span>
+            </a>
+            <a href="#" class="sidebar-item flex items-center p-4 hover:bg-blue-800">
+                <i class="fas fa-tv text-xl w-8"></i>
+                <span class="sidebar-item-text ml-4 whitespace-nowrap">TV Shows</span>
+            </a>
+            <a href="#" class="sidebar-item flex items-center p-4 hover:bg-blue-800">
+                <i class="fas fa-dragon text-xl w-8"></i>
+                <span class="sidebar-item-text ml-4 whitespace-nowrap">Anime</span>
+            </a>
+            <a href="#" class="sidebar-item flex items-center p-4 hover:bg-blue-800">
+                <i class="fas fa-music text-xl w-8"></i>
+                <span class="sidebar-item-text ml-4 whitespace-nowrap">Music</span>
+            </a>
+            <a href="#" class="sidebar-item flex items-center p-4 hover:bg-blue-800">
+                <i class="fas fa-bookmark text-xl w-8"></i>
+                <span class="sidebar-item-text ml-4 whitespace-nowrap">Collections</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col ml-20">
+        <!-- Navbar -->
+        <header class="bg-white shadow-sm z-10">
+            <div class="flex items-center justify-between px-6 py-3">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <span class="text-2xl font-bold text-blue-600">Finderr</span>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="relative mx-4 flex-1 max-w-2xl">
+                    <input type="text"
+                           placeholder="Search movies, shows, anime..."
+                           class="nav-search py-2 px-4 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <button class="absolute right-3 top-2 text-gray-500">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+
+                <!-- Right Icons -->
+                <div class="flex items-center space-x-6">
+                    <button class="text-gray-600 hover:text-blue-600 relative">
+                        <i class="fas fa-bell text-xl"></i>
+                        <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+                    </button>
+
+                    <!-- User Dropdown -->
+                    <div class="relative group">
+                        <button class="flex items-center space-x-2 focus:outline-none">
+                            <img src="https://via.placeholder.com/40" alt="Profile" class="w-8 h-8 rounded-full">
+                        </button>
+                        <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden group-hover:block z-20">
+                            <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-blue-50">Profile</a>
+                            <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-blue-50">Settings</a>
+                            <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-blue-50">Sign out</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Page Content -->
+        <main class="flex-1 overflow-y-auto p-6 bg-gray-50">
+            @RenderBody()
+        </main>
+    </div>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

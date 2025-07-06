@@ -1,0 +1,80 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Create Your Account";
+    Layout = "/Pages/Shared/_AuthLayout.cshtml";
+}
+
+<div class="min-h-screen flex">
+    <!-- Form Section (Left) -->
+    <div class="w-1/2 p-12 flex items-center justify-center">
+        <div class="w-full max-w-md form-container p-10 rounded-xl shadow-2xl">
+            <h2 class="text-3xl font-bold text-blue-900 mb-6">Join Finderr</h2>
+
+            <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="space-y-6">
+                <div asp-validation-summary="ModelOnly" class="text-red-500"></div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label asp-for="Input.FirstName" class="block text-sm font-medium text-blue-800"></label>
+                        <input asp-for="Input.FirstName" class="mt-1 p-3 w-full border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        <span asp-validation-for="Input.FirstName" class="text-red-500 text-xs"></span>
+                    </div>
+                    <div>
+                        <label asp-for="Input.LastName" class="block text-sm font-medium text-blue-800"></label>
+                        <input asp-for="Input.LastName" class="mt-1 p-3 w-full border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        <span asp-validation-for="Input.LastName" class="text-red-500 text-xs"></span>
+                    </div>
+                </div>
+
+                <div>
+                    <label asp-for="Input.UserName" class="block text-sm font-medium text-blue-800"></label>
+                    <input asp-for="Input.UserName" autocomplete="username" class="mt-1 p-3 w-full border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    <span asp-validation-for="Input.UserName" class="text-red-500 text-xs"></span>
+                </div>
+
+                <div>
+                    <label asp-for="Input.Email" class="block text-sm font-medium text-blue-800"></label>
+                    <input asp-for="Input.Email" autocomplete="email" class="mt-1 p-3 w-full border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    <span asp-validation-for="Input.Email" class="text-red-500 text-xs"></span>
+                </div>
+
+                <div>
+                    <label asp-for="Input.Password" class="block text-sm font-medium text-blue-800"></label>
+                    <input asp-for="Input.Password" autocomplete="new-password" class="mt-1 p-3 w-full border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    <span asp-validation-for="Input.Password" class="text-red-500 text-xs"></span>
+                </div>
+
+                <div>
+                    <label asp-for="Input.ConfirmPassword" class="block text-sm font-medium text-blue-800"></label>
+                    <input asp-for="Input.ConfirmPassword" autocomplete="new-password" class="mt-1 p-3 w-full border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-red-500 text-xs"></span>
+                </div>
+
+                <button type="submit" class="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition duration-300 shadow-lg">
+                    Create Account
+                </button>
+            </form>
+
+            <div class="mt-6 text-center">
+                <p class="text-blue-800">
+                    Already have an account?
+                    <a asp-page="./Login" class="font-semibold text-blue-600 hover:text-blue-800">Sign In</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Section (Right) -->
+    <div class="w-1/2 auth-bg flex items-center justify-center">
+        <div class="text-center p-12 text-white">
+            <img src="https://illustrations.popsy.co/amber/digital-nomad.svg" alt="Media Illustration" class="w-3/4 mx-auto mb-8">
+            <h3 class="text-3xl font-bold mb-4">Organize Your Media Collection</h3>
+            <p class="text-xl opacity-90">Upload, manage and enjoy your media files in one place</p>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
