@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Title}}</title>
+    <link rel="stylesheet" href="/css/layout.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/auth/login">Login</a>
+            <a href="/auth/signup">Sign Up</a>
+        </nav>
+    </header>
+
+    <main>
+        {{embed}}
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Finderr</p>
+    </footer>
+
+    <script src="/js/layout.js"></script>
+</body>
+</html>
