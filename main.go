@@ -9,6 +9,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/template/html/v2"
+	"github.com/gofiber/fiber/v2/middleware/encryptcookie"
 	"github.com/joho/godotenv"
 )
 
@@ -26,6 +27,10 @@ func main() {
 	app := fiber.New(fiber.Config{
 		Views: engine,
 	})
+
+	app.Use(encryptcookie.New(encryptcookie.Config{
+		Key: os.Getenv("COOKIE_SECRET"),
+	}))
 
 	routes.SetupRoutes(app)
 
