@@ -9,6 +9,9 @@
 <body>
     <div class="auth-container">
         <h1>Login</h1>
+        {{if .Error}}
+            <div class="alert alert-danger">{{.Error}}</div>
+        {{end}}
         <form action="/auth/login" method="POST">
             <div class="form-group">
                 <label for="email">Email:</label>

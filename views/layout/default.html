@@ -10,8 +10,13 @@
     <header>
         <nav>
             <a href="/">Home</a>
-            <a href="/auth/login">Login</a>
-            <a href="/auth/signup">Sign Up</a>
+            {{if .User}}
+                <span>Welcome, {{.User.Username}}</span>
+                <a href="/auth/logout">Logout</a>
+            {{else}}
+                <a href="/auth/login">Login</a>
+                <a href="/auth/signup">Sign Up</a>
+            {{end}}
         </nav>
     </header>
 
