@@ -1,6 +1,9 @@
 package routes
 
 import (
+	"finderr/handlers"
+	"finderr/models"
+
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -9,9 +12,11 @@ func SetupRoutes(app *fiber.App) {
 	app.Static("/", "./public")
 
 	// Home page
-	app.Get("/", func(c *fiber.Ctx) error {
+	app.Get("/", handlers.AuthRequired, func(c *fiber.Ctx) error {
+		user := c.Locals("user").(*models.User)
 		return c.Render("pages/home", fiber.Map{
 			"Title": "Finderr - Home",
+			"User":  user,
 		}, "layout/default")
 	})
 
@@ -22,9 +27,14 @@ func SetupRoutes(app *fiber.App) {
 			"Title": "Login",
 		})
 	})
+	auth.Post("/login", handlers.Login)
+
 	auth.Get("/signup", func(c *fiber.Ctx) error {
 		return c.Render("auth/signup", fiber.Map{
 			"Title": "Sign Up",
 		})
 	})
+	auth.Post("/signup", handlers.Register)
+
+	auth.Get("/logout", handlers.Logout)
 }
