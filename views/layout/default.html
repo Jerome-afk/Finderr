@@ -3,26 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{.Title}}</title>
-    <link rel="stylesheet" href="/css/layout.css">
+    <title>{{.Title}} - Finderr</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/layout.css?v=1.0">
 </head>
 <body>
-    <header>
-        <nav>
-            <a href="/">Home</a>
-            {{if .User}}
-                <span>Welcome, {{.User.Username}}</span>
-                <a href="/auth/logout">Logout</a>
-            {{else}}
-                <a href="/auth/login">Login</a>
-                <a href="/auth/signup">Sign Up</a>
-            {{end}}
-        </nav>
-    </header>
+    <!--  Navigation Bar  -->
+    <nav class="navbar">
+        <div class="navbar-left">
+            <a href="/" class="logo">Finderr</a>
+        </div>
 
-    <main>
-        {{embed}}
-    </main>
+        <div class="navbar-right">
+            <div class="search-bar">
+                <input type="text" placeholder="Search...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+
+            <div class="notification-icon">
+                <i class="fas fa-bell"></i>
+                <span class="badge">3</span>
+            </div>
+
+            {{if .User}}
+            <div class="profile-dropdown">
+                <img src="{{.User.ProfileImage}}" alt="Profile" class="profile-pic">
+                <div class="dropdown-content">
+                    {{if eq .User.Role "admin"}}
+                        <a href="/pages/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                        <a href="/changes/users"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="/auth/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    {{else}}
+                        <a href="/pages/dashboard"><i class="fas fa-user"></i> Profile</a>
+                        <a href="/auth/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    {{end}}
+                </div>
+            </div>
+            {{end}}
+        </div>
+    </nav>
+
+    <!--  Sidebar and Main Content  -->
+    <div class="container">
+        <!-- Sidebar  -->
+        <aside class="sidebar">
+            <ul>
+                <li>
+                    <a href="/movies">
+                        <i class="fas fa-film"></i>
+                        <span class="menu-text">Movies</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/tv-shows">
+                        <i class="fas fa-tv"></i>
+                        <span class="menu-text">TV Shows</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/anime">
+                        <i class="fas fa-dragon"></i>
+                        <span class="menu-text">Anime</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/music">
+                        <i class="fas fa-music"></i>
+                        <span class="menu-text">Music</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/downloads">
+                        <i class="fas fa-download"></i>
+                        <span class="menu-text">Downloads</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/discover">
+                        <i class="fas fa-compass"></i>
+                        <span class="menu-text">Discover</span>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+
+        <!-- Main Content  -->
+         <main class="main-content">
+            {{embed}}
+         </main>
+    </div>
 
     <footer>
         <p>&copy; 2023 Finderr</p>
