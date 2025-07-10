@@ -34,9 +34,11 @@ func Register(c *fiber.Ctx) error {
 	}
 
 	user := &models.User{
-		Username: form.Username,
-		Email:    form.Email,
-		Password: form.Password,
+		Username:     form.Username,
+		Email:        form.Email,
+		Password:     form.Password,
+		Role:         models.MemberRole, // Default role
+		ProfileImage: "/images/default.jpg", // Default profile image
 	}
 
 	if err := db.CreateUser(user); err != nil {
