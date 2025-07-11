@@ -7,6 +7,21 @@
     <link rel="stylesheet" href="/css/auth.css">
 </head>
 <body>
+    <div class="container reverse">
+        <div class="form-section">
+            <h2>Sign in</h2>
+            <form>
+                <input type="email" placeholder="Your Email" required />
+                <input type="password" placeholder="Your Password" required />
+                <button type="submit">Sign in</button>
+            </form>
+            <p class="switch">Don't have an account? <a href="signup.html">Create one</a></p>
+        </div>
+        <div class="text-section">
+            <h1>Welcome Back</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas placerat ultricies libero eu pharetra. Vestibulum a ultricies augue.</p>
+        </div>
+    </div>
     <div class="auth-container">
         <h1>Login</h1>
         {{if .Error}}
