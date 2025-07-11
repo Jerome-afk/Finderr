@@ -7,27 +7,25 @@
     <link rel="stylesheet" href="/css/auth.css">
 </head>
 <body>
-    <div class="auth-container">
-        <h1>Sign Up</h1>
-        {{if .Error}}
-            <div class="alert alert-danger">{{.Error}}</div>
-        {{end}}
-        <form action="/auth/signup" method="POST">
-            <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <button type="submit" class="btn">Sign Up</button>
-        </form>
-        <p class="auth-link">Already have an account? <a href="/auth/login">Login</a></p>
+    <div class="container">
+        <div class="text-section">
+            <h1>Let’s Get Started</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas placerat ultricies libero eu pharetra. Vestibulum a ultricies augue.</p>
+        </div>
+        <div class="form-section">
+            <h2>Sign up</h2>
+            {{ if .Error}}
+                <div class="alert alert-danger">{{.Error}}</div>
+            {{end}}
+            <form action="/auth/signup" method="POST">
+                <input type="text" id="username" name="username" placeholder="Username" required />
+                <input type="email" id="email" name="email" placeholder="Your Email" required />
+                <input type="password" id="password" name="password" placeholder="Create Password" required />
+                <input type="password" placeholder="Repeat password" required />
+                <button type="submit">Sign up</button>
+            </form>
+            <p class="switch">Already a Member? <a href="/auth/login">Sign in here</a></p>
+        </div>
     </div>
 </body>
 </html>
