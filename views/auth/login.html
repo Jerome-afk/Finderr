@@ -9,7 +9,10 @@
 <body>
     <div class="container reverse">
         <div class="form-section">
-            <h2>Sign in</h2>
+            <h2>Login</h2>
+            {{ if .Error }}
+                <div class="alert alert-danger">{{.Error}}</div>
+            {{ end }}
             <form>
                 <input type="email" placeholder="Your Email" required />
                 <input type="password" placeholder="Your Password" required />
