@@ -20,6 +20,82 @@ func SetupRoutes(app *fiber.App) {
 		}, "layout/default")
 	})
 
+	// Normal pages
+	norm := app.Group("/pages")
+	norm.Get("/anime", handlers.AuthRequired, func(c *fiber.Ctx) error {
+		user := c.Locals("user").(*models.User)
+		return c.Render("pages/anime", fiber.Map{
+			"Title": "Finderr - Anime",
+			"User": user,
+		}, "layout/default")
+	})
+
+	norm.Get("/movies", handlers.AuthRequired, func(c *fiber.Ctx) error {
+		user := c.Locals("user").(*models.User)
+		return c.Render("pages/movies", fiber.Map{
+			"Title": "Finderr - Movies",
+			"User": user,
+		}, "layout/default")
+	})
+
+	norm.Get("/tv-shows", handlers.AuthRequired, func(c *fiber.Ctx) error {
+		user := c.Locals("user").(*models.User)
+		return c.Render("pages/tvshows", fiber.Map{
+			"Title": "Finderr - Tv Shows",
+			"User": user,
+		}, "layout/default")
+	})
+
+	norm.Get("/downloads", handlers.AuthRequired, func(c *fiber.Ctx) error {
+		user := c.Locals("user").(*models.User)
+		return c.Render("pages/downloads", fiber.Map{
+			"Title": "Downloads",
+			"User": user,
+		}, "layout/default")
+	})
+
+	norm.Get("/dashboard", handlers.AuthRequired, func(c *fiber.Ctx) error {
+		user := c.Locals("user").(*models.User)
+		return c.Render("pages/dashboard", fiber.Map{
+			"Title": "User Dashboard",
+			"User": user,
+		}, "layout/default")
+	})
+
+	norm.Get("/music", handlers.AuthRequired, func(c *fiber.Ctx) error {
+		user := c.Locals("user").(*models.User)
+		return c.Render("pages/music", fiber.Map{
+			"Title": "Finderr - Music",
+			"User": user,
+		}, "layout/default")
+	})
+
+	norm.Get("/discover", handlers.AuthRequired, func(c *fiber.Ctx) error {
+		user := c.Locals("user").(*models.User)
+		return c.Render("pages/discover", fiber.Map{
+			"Title": "Finderr - Discover",
+			"User": user,
+		})
+	})
+
+	// Config pages
+	config := app.Group("/config")
+	config.Get("/users", handlers.AuthRequired, func(c *fiber.Ctx) error {
+		user := c.Locals("user").(*models.User)
+		return c.Render("changes/users", fiber.Map{
+			"Title": "Config - Users",
+			"User":  user,
+		}, "layout/settings")
+	})
+
+	config.Get("/logs", handlers.AuthRequired, func(c *fiber.Ctx) error {
+		user := c.Locals("user").(*models.User)
+		return c.Render("changes/logs", fiber.Map{
+			"Title": "Config - Logs",
+			"User":  user,
+		}, "layout/settings")
+	})
+
 	// Auth routes (without layout)
 	auth := app.Group("/auth")
 	auth.Get("/login", func(c *fiber.Ctx) error {

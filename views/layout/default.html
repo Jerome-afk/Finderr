@@ -6,6 +6,17 @@
     <title>{{.Title}} - Finderr</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/layout.css?v=1.0">
+    {{if eq .Title "Anime"}}
+        <link rel="stylesheet" href="/css/anime.css?v=1.0">
+    {{else if eq .Title "Movies"}}
+        <link rel="stylesheet" href="/css/movies.css?v=1.0">
+    {{else if eq .Title "TV Shows"}}
+        <link rel="stylesheet" href="/css/movies.css?v=1.0">
+    {{else if eq .Title "Music"}}
+        <link rel="stylesheet" href="/css/music.css?v=1.0">
+    {{else if eq .Title "Downloads"}}
+        <link rel="stylesheet" href="/css/downloads.css?v=1.0">
+    {{end}}
 </head>
 <body>
     <!--  Navigation Bar  -->
@@ -31,7 +42,7 @@
                 <div class="dropdown-content">
                     {{if eq .User.Role "admin"}}
                         <a href="/pages/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-                        <a href="/changes/users"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="/config/users"><i class="fas fa-cog"></i> Settings</a>
                         <a href="/auth/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
                     {{else}}
                         <a href="/pages/dashboard"><i class="fas fa-user"></i> Profile</a>
@@ -49,37 +60,37 @@
         <aside class="sidebar">
             <ul>
                 <li>
-                    <a href="/movies">
+                    <a href="/pages/movies">
                         <i class="fas fa-film"></i>
                         <span class="menu-text">Movies</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/tv-shows">
+                    <a href="/pages/tv-shows">
                         <i class="fas fa-tv"></i>
                         <span class="menu-text">TV Shows</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/anime">
+                    <a href="/pages/anime">
                         <i class="fas fa-dragon"></i>
                         <span class="menu-text">Anime</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/music">
+                    <a href="/pages/music">
                         <i class="fas fa-music"></i>
                         <span class="menu-text">Music</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/downloads">
+                    <a href="/pages/downloads">
                         <i class="fas fa-download"></i>
                         <span class="menu-text">Downloads</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/discover">
+                    <a href="/pages/discover">
                         <i class="fas fa-compass"></i>
                         <span class="menu-text">Discover</span>
                     </a>
