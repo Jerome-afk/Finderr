@@ -12,13 +12,15 @@ func SetupRoutes(app *fiber.App) {
 	app.Static("/", "./public")
 
 	// Home page
-	app.Get("/", handlers.AuthRequired, func(c *fiber.Ctx) error {
-		user := c.Locals("user").(*models.User)
-		return c.Render("pages/home", fiber.Map{
-			"Title": "Finderr - Home",
-			"User":  user,
-		}, "layout/default")
-	})
+	// app.Get("/", handlers.AuthRequired, func(c *fiber.Ctx) error {
+	// 	user := c.Locals("user").(*models.User)
+	// 	return c.Render("pages/home", fiber.Map{
+	// 		"Title": "Finderr - Home",
+	// 		"User":  user,
+	// 	}, "layout/default")
+	// })
+
+	app.Get("/", handlers.AuthRequired,handlers.HomeHandler)
 
 	// Normal pages
 	norm := app.Group("/pages")
