@@ -17,7 +17,7 @@ type User struct {
 	Email        string `json:"email" gorm:"unique;not null"`
 	Password     string `json:"password_hash" gorm:"not null"`
 	Role         Role   `json:"role" gorm:"default:'member'"`
-	ProfileImage string `json:"profile_image" gorm:"default:'/images/default.jpg'"`
+	ProfileImage string `json:"profile_image" gorm:"default:'/images/default.png'"`
 	SessionToken string `json:"session_token" gorm:"size:255;index"`
 }
 
