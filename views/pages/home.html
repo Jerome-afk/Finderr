@@ -1,2 +1,51 @@
-<h1>Welcome to Finderr</h1>
-<p>This is the home page of our application.</p>
+<div class="home-page">
+    <!-- Trending Carousel -->
+    <section class="trending-section">
+        <h2 class="section-title">Trending Now</h2>
+        <div class="trending-carousel">
+            {{range .TrendingSections}}
+            <div class="trending-category">
+                <h3>{{.Title}}</h3>
+                <div class="media-scroller">
+                    {{range .Items}}
+                    <div class="media-card">
+                        <img src="{{if eq .Type "anime"}}{{.Poster}}{{else}}https://image.tmdb.org/t/p/w500{{.Poster}}{{end}}" alt="{{.Title}}">
+                        <div class="media-info">
+                            <h4>{{.Title}}</h4>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <span>{{printf "%.1f" .Rating}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    {{end}}
+                </div>
+            </div>
+            {{end}}
+        </div>
+    </section>
+
+    <!-- Popular Sections -->
+    {{range .PopularSections}}
+    <section class="popular-section">
+        <div class="section-header">
+            <h2 class="section-title">{{.Title}}</h2>
+            <a href="{{.MoreURL}}" class="show-more">Show More <i class="fas fa-chevron-right"></i></a>
+        </div>
+        <div class="media-grid">
+            {{range .Items}}
+            <div class="media-card">
+                <img src="{{if eq .Type "anime"}}{{.Poster}}{{else}}https://image.tmdb.org/t/p/w500{{.Poster}}{{end}}" alt="{{.Title}}">
+                <div class="media-info">
+                    <h4>{{.Title}}</h4>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <span>{{printf "%.1f" .Rating}}</span>
+                    </div>
+                </div>
+            </div>
+            {{end}}
+        </div>
+    </section>
+    {{end}}
+</div>
