@@ -49,7 +49,7 @@ func createDafaultAdmin() error {
 			Email:        "admin@finderr.com",
 			Password:     "admin123", // In production, use environment variable for this
 			Role:         models.AdminRole,
-			ProfileImage: "/images/admin.jpg",
+			ProfileImage: "/images/admin.webp",
 		}
 
 		// Hash password
