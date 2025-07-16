@@ -114,6 +114,13 @@ func (t *TMDBClient) GetTrendingTVShows() ([]models.MediaItem, error) {
 		return nil, fmt.Errorf("failed to unmarshal response: %w", err)
 	}
 
+	for i := range result.Results {
+		result.Results[i].Type = "tv"
+		if result.Results[i].Name == "" && result.Results[i].Title != "" {
+			result.Results[i].Name = result.Results[i].Title
+		}
+	}
+
 	// Limit to 5 items
 	if len(result.Results) > 5 {
 		result.Results = result.Results[:5]
@@ -141,6 +148,13 @@ func (t *TMDBClient) GetPopularTVShows() ([]models.MediaItem, error) {
 		return nil, fmt.Errorf("failed to unmarshal response: %w", err)
 	}
 
+	for i := range result.Results {
+		result.Results[i].Type = "tv"
+		if result.Results[i].Name == "" && result.Results[i].Title != "" {
+			result.Results[i].Name = result.Results[i].Title
+		}
+	}
+
 	// Limit to 15 items
 	if len(result.Results) > 15 {
 		result.Results = result.Results[:15]
@@ -162,6 +176,7 @@ func (a *AniListClient) GetTrendingAnime() ([]models.MediaItem, error) {
 				    large
 				}
 				averageScore
+				description
 			}
 		}
 	}`
@@ -178,6 +193,7 @@ func (a *AniListClient) GetTrendingAnime() ([]models.MediaItem, error) {
 					Large string `json:"large"`
 				} `json:"coverImage"`
 				AverageScore int `json:"averageScore"`
+				Description string `json:"description"`
 			} `json:"media"`
 		} `json:"Page"`
 	}
@@ -202,9 +218,9 @@ func (a *AniListClient) GetTrendingAnime() ([]models.MediaItem, error) {
 		items = append(items, models.MediaItem{
 			ID:           m.ID,
 			Title:        title,
-			CoverImage:   m.CoverImage.Large,
+			Backdrop:   m.CoverImage.Large,
 			Poster:       m.CoverImage.Large, // Assuming CoverImage is used as Poster
-			AverageScore: m.AverageScore / 10,
+			Overview:    m.Description,
 			Rating: 	 float64(m.AverageScore) / 10.0, // Convert to float64 for consistency
 			Type:         "anime",
 		})
@@ -227,6 +243,7 @@ func (a *AniListClient) GetPopularAnime() ([]models.MediaItem, error) {
 				    large
 				}
 				averageScore
+				description
 			}
 		}
 	}`
@@ -243,6 +260,7 @@ func (a *AniListClient) GetPopularAnime() ([]models.MediaItem, error) {
 					Large string `json:"large"`
 				} `json:"coverImage"`
 				AverageScore int `json:"averageScore"`
+				Description string `json:"description"`
 			} `json:"media"`
 		} `json:"Page"`
 	}
@@ -266,9 +284,9 @@ func (a *AniListClient) GetPopularAnime() ([]models.MediaItem, error) {
 		items = append(items, models.MediaItem{
 			ID:           m.ID,
 			Title:        title,
-			CoverImage:   m.CoverImage.Large,
+			Backdrop:     m.CoverImage.Large,
 			Poster:       m.CoverImage.Large, // Assuming CoverImage is used as Poster
-			AverageScore: m.AverageScore / 10,
+			Overview:     m.Description,
 			Rating: 	 float64(m.AverageScore) / 10.0, // Convert to float64 for consistency
 			Type:         "anime",
 		})

@@ -24,6 +24,26 @@ func main() {
 	}
 
 	engine := html.New("./views", ".html")
+	engine.AddFunc("formatYear", func(date string) string {
+		if len(date) >= 4 {
+			return date[:4]
+		}
+		return ""
+	})
+
+	engine.AddFunc("formatType", func(mediaType string) string {
+		switch mediaType {
+		case "movie":
+			return "Movie"
+		case "tv":
+			return "TV Show"
+		case "anime":
+			return "Anime"
+		default:
+			return "Unknown"
+		}
+	})
+	
 	app := fiber.New(fiber.Config{
 		Views: engine,
 	})

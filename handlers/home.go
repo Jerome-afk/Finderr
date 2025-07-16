@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"math/rand/v2"
+
 	"finderr/models"
 	"finderr/services"
 
@@ -16,6 +18,17 @@ func HomeHandler(c *fiber.Ctx) error {
 	trendingTV, _ := tmdb.GetTrendingTVShows()
 	trendingAnime, _ := anilist.GetTrendingAnime()
 
+	// Combine trending sections
+	var trendingItems []models.MediaItem
+	trendingItems = append(trendingItems, trendingMovies...)
+	trendingItems = append(trendingItems, trendingTV...)
+	trendingItems = append(trendingItems, trendingAnime...)
+
+	// Shuffle the trending items
+	rand.Shuffle(len(trendingItems), func(i, j int) {
+		trendingItems[i], trendingItems[j] = trendingItems[j], trendingItems[i]
+	})
+
 	// Get Popular content
 	popularMovies, _ := tmdb.GetPopularMovies()
 	popularTV, _ := tmdb.GetPopularTVShows()
@@ -23,34 +36,21 @@ func HomeHandler(c *fiber.Ctx) error {
 
 	return c.Render("pages/home", fiber.Map{
 		"Title": "Finderr - Home",
-		"TrendingSections": []models.MediaSection{
-			{
-				Title: "Trending Movies",
-				Items: trendingMovies,
-			},
-			{
-				Title: "Trending TV Shows",
-				Items: trendingTV,
-			},
-			{
-				Title: "Trending Anime",
-				Items: trendingAnime,
-			},
-		},
+		"TrendingItems": trendingItems,
 		"PopularSections": []models.MediaSection{
 			{
-				Title: "Popular Movies",
-				Items: popularMovies,
+				Title:   "Popular Movies",
+				Items:   popularMovies,
 				MoreURL: "/pages/discover/movies?sort=popular",
 			},
 			{
-				Title: "Popular TV Shows",
-				Items: popularTV,
+				Title:   "Popular TV Shows",
+				Items:   popularTV,
 				MoreURL: "/pages/discover/tv-shows?sort=popular",
 			},
 			{
-				Title: "Popular Anime",
-				Items: popularAnime,
+				Title:   "Popular Anime",
+				Items:   popularAnime,
 				MoreURL: "/pages/discover/anime?sort=popular",
 			},
 		},
