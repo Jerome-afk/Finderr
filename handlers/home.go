@@ -14,9 +14,9 @@ func HomeHandler(c *fiber.Ctx) error {
 	anilist := services.NewAniListClient()
 
 	// Get trending content
-	trendingMovies, _ := tmdb.GetTrendingMovies()
-	trendingTV, _ := tmdb.GetTrendingTVShows()
-	trendingAnime, _ := anilist.GetTrendingAnime()
+	trendingMovies, _ := tmdb.GetTrendingMovies(5)
+	trendingTV, _ := tmdb.GetTrendingTVShows(5)
+	trendingAnime, _ := anilist.GetTrendingAnime(5)
 
 	// Combine trending sections
 	var trendingItems []models.MediaItem
@@ -35,7 +35,7 @@ func HomeHandler(c *fiber.Ctx) error {
 	popularAnime, _ := anilist.GetPopularAnime()
 
 	return c.Render("pages/home", fiber.Map{
-		"Title": "Finderr - Home",
+		"Title": "Home",
 		"TrendingItems": trendingItems,
 		"PopularSections": []models.MediaSection{
 			{
