@@ -20,33 +20,15 @@ func SetupRoutes(app *fiber.App) {
 	// 	}, "layout/default")
 	// })
 
-	app.Get("/", handlers.AuthRequired,handlers.HomeHandler)
+	app.Get("/", handlers.AuthRequired, handlers.HomeHandler)
 
 	// Normal pages
 	norm := app.Group("/pages")
-	norm.Get("/anime", handlers.AuthRequired, func(c *fiber.Ctx) error {
-		user := c.Locals("user").(*models.User)
-		return c.Render("pages/anime", fiber.Map{
-			"Title": "Finderr - Anime",
-			"User": user,
-		}, "layout/default")
-	})
+	norm.Get("/anime", handlers.AuthRequired, handlers.AnimeHandler)
 
-	norm.Get("/movies", handlers.AuthRequired, func(c *fiber.Ctx) error {
-		user := c.Locals("user").(*models.User)
-		return c.Render("pages/movies", fiber.Map{
-			"Title": "Finderr - Movies",
-			"User": user,
-		}, "layout/default")
-	})
+	norm.Get("/movies", handlers.AuthRequired, handlers.MoviesHandler)
 
-	norm.Get("/tv-shows", handlers.AuthRequired, func(c *fiber.Ctx) error {
-		user := c.Locals("user").(*models.User)
-		return c.Render("pages/tvshows", fiber.Map{
-			"Title": "Finderr - Tv Shows",
-			"User": user,
-		}, "layout/default")
-	})
+	norm.Get("/tv-shows", handlers.AuthRequired, handlers.ShowsHandler)
 
 	norm.Get("/downloads", handlers.AuthRequired, func(c *fiber.Ctx) error {
 		user := c.Locals("user").(*models.User)
