@@ -40,7 +40,7 @@ func NewAniListClient() *AniListClient {
 	}
 }
 
-func (t *TMDBClient) GetTrendingMovies() ([]models.MediaItem, error) {
+func (t *TMDBClient) GetTrendingMovies(no int) ([]models.MediaItem, error) {
 	url := fmt.Sprintf("%s/trending/movie/day?api_key=%s", t.BaseURL, t.APIKey)
 	resp, err := t.client.Get(url)
 	if err != nil {
@@ -61,8 +61,8 @@ func (t *TMDBClient) GetTrendingMovies() ([]models.MediaItem, error) {
 	}
 
 	// Limit to 5 items
-	if len(result.Results) > 5 {
-		result.Results = result.Results[:5]
+	if len(result.Results) > no {
+		result.Results = result.Results[:no]
 	}
 	return result.Results, nil
 }
@@ -94,7 +94,7 @@ func (t *TMDBClient) GetPopularMovies() ([]models.MediaItem, error) {
 	return result.Results, nil
 }
 
-func (t *TMDBClient) GetTrendingTVShows() ([]models.MediaItem, error) {
+func (t *TMDBClient) GetTrendingTVShows(no int) ([]models.MediaItem, error) {
 	url := fmt.Sprintf("%s/trending/tv/day?api_key=%s", t.BaseURL, t.APIKey)
 	resp, err := t.client.Get(url)
 	if err != nil {
@@ -122,8 +122,8 @@ func (t *TMDBClient) GetTrendingTVShows() ([]models.MediaItem, error) {
 	}
 
 	// Limit to 5 items
-	if len(result.Results) > 5 {
-		result.Results = result.Results[:5]
+	if len(result.Results) > no {
+		result.Results = result.Results[:no]
 	}
 	return result.Results, nil
 }
@@ -162,10 +162,10 @@ func (t *TMDBClient) GetPopularTVShows() ([]models.MediaItem, error) {
 	return result.Results, nil
 }
 
-func (a *AniListClient) GetTrendingAnime() ([]models.MediaItem, error) {
+func (a *AniListClient) GetTrendingAnime(no int) ([]models.MediaItem, error) {
 	// GraphQL query to fetch trending anime
 	query := `query {
-		Page(page: 1, perPage: 5) {
+		Page(page: 1, perPage: ` + fmt.Sprintf("%d", no) + `) {
 			media(type: ANIME, sort: TRENDING_DESC) {
 				id
 				title {
