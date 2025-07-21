@@ -1,0 +1,38 @@
+<div class="movie-page">
+    <!-- Carousel -->
+    <section class="hero-carousel">
+        <div class="carousel-container">
+            <div class="carousel-track">
+                {{range $index, $item := .TrendingAnime}}
+                <div class="carousel-slide {{if eq $index 0}}active{{end}}" data-index="{{$index}}">
+                    <div class="slide-background" style="background-image: url('{{if eq $item.Type "anime"}}{{$item.Backdrop}}{{else}}http://image.tmdb.org/t/p/original{{$item.Backdrop}}{{end}}');"></div>
+                    <div class="slide-overlay"></div>
+                    <div class="slide-content">
+                        <h2 class="slide-title">{{if eq $item.Title ""}}{{$item.Name}}{{else}}{{$item.Title}}{{end}}</h2>
+                        <div class="slide-meta">
+                            <span class="rating"><i class="fas fa-star"></i> {{printf "%.1f" $item.Rating}}</span>
+                            <span class="year">{{$item.ReleaseDate | formatYear}}</span>
+                            <span class="type">{{$item.Type | formatType}}</span>
+                        </div>
+                        <p class="slide-description">{{$item.Overview}}</p>
+                        <div class="slide-actions">
+                            <button class="btn btn-play"><i class="fas fa-play"></i> Download</button>
+                            <button class="btn btn-play"><i class="fas fa-info-circle"></i> More Info</button>
+                        </div>
+                    </div>
+                </div>
+                {{end}}
+            </div>
+
+            <div class="carousel-controls">
+                <button class="control-prev"><i class="fas fa-chevron-left"></i></button>
+                <div class="class-indicator">
+                    {{range $index, $item := .TrendingAnime}}
+                    <button class="indicator {{if eq $index 0}}active{{end}}" data-index="{{$index}}"></button>
+                    {{end}}
+                </div>
+                <button class="control-next"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </section>
+</div>
