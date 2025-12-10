@@ -2,3 +2,7 @@
 {"level":"PASS","message":"Database connection success","time":"2025-12-09T01:47:57.7923379+03:00"}
 {"level":"INFO","message":"Server started","time":"2025-12-09T01:49:21.4271011+03:00","data":{"port":8080}}
 {"level":"PASS","message":"Database connection success","time":"2025-12-09T01:49:21.4300708+03:00"}
+{"level":"INFO","message":"Server started","time":"2025-12-10T10:43:51.8805829+03:00","data":{"port":8080}}
+{"level":"PASS","message":"Database connection success","time":"2025-12-10T10:43:51.8858661+03:00"}
+{"level":"INFO","message":"Server started","time":"2025-12-10T10:46:23.3182154+03:00","data":{"port":8080}}
+{"level":"PASS","message":"Database connection success","time":"2025-12-10T10:46:23.3218204+03:00"}
